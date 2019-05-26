@@ -8,8 +8,8 @@ const exchangeRateUrl = 'https://api.privatbank.ua/p24api/pubinfo?json&exchange&
 const server = http.createServer(function(_request, _response) {
     getExchangeRates(function (_data, _error) {
         if (_error) {
-            console.log('Error: ' + error.message);
-            _response.end('Error: ' + error.message);
+            console.log('Error: ' + _error.message);
+            _response.end('Error: ' + _error.message);
             return;
         }
 
@@ -18,16 +18,16 @@ const server = http.createServer(function(_request, _response) {
     });
 });
 
-server.listen(port, function(err) {
-    if (!err) {
+server.listen(port, function(_err) {
+    if (!_err) {
         console.log('server is working by http://localhost:3000');
     } else {
-        return console.log(err);
+        return console.log(_err);
     }
 });
 
 
-function getExchangeRates(callback) {
+function getExchangeRates(_callback) {
     https.get(exchangeRateUrl, function(_response) {
 
         const statusCode = _response.statusCode;
@@ -45,27 +45,27 @@ function getExchangeRates(callback) {
         if (error) {
             console.error(error.message);
             _response.resume();
-            return callback(null, error);
+            return _callback(null, error);
         }
 
         _response.setEncoding('utf8');
 
-        let rawData;
+        let rawData = '';
         _response.on('data', function(_data) {
             rawData += _data;
         });
 
         _response.on('end', function() {
             try {
-                return callback(rawData, null);
+                return _callback(rawData, null);
             } catch (e) {
                 console.error(e.message);
-                return callback(rawData, e);
+                return _callback(rawData, e);
             }
         });
     }).on('error', function(e) {
         console.error('Error: ' + e.message);
-        return callback(null, e);
+        return _callback(null, e);
     });
 }
 
