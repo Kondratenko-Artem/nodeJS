@@ -35,7 +35,7 @@
         document.getElementById("exchangeRatesData").innerHTML = content;
     });
 
-    function httpGetAsync(theUrl, callback) {
+    function httpGetAsync(url, callback) {
         const xmlHttp = new XMLHttpRequest();
         xmlHttp.onreadystatechange = function() {
             if (xmlHttp.readyState === 4 && xmlHttp.status === 200) {
@@ -44,7 +44,7 @@
                 callback(null);
             }
         };
-        xmlHttp.open("GET", theUrl, true);
+        xmlHttp.open("GET", url, true);
         xmlHttp.send(null);
     }
 </script>
