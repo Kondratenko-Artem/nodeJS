@@ -50,7 +50,7 @@ function getExchangeRates(callback) {
 
         _response.setEncoding('utf8');
 
-        let rawData = '';
+        let rawData;
         _response.on('data', function(_data) {
             rawData += _data;
         });

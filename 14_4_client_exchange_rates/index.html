@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<p id="exchangeRatesData"></p>
+
+<script>
+
+    const exchangeRateUrl = 'https://api.privatbank.ua/p24api/pubinfo?json&exchange&coursid=3&fbclid=IwAR0ANFM-wz2VU8SywLiRAIkrVNAlJqV9IXnPXG6CTSBIUmNOFwDZ73bvXDU';
+
+    httpGetAsync(exchangeRateUrl, function(_data) {
+        let content;
+
+        if (_data) {
+            const exchangeRates = JSON.parse(_data);
+            content = "<table border='1'>";
+            content += "<tr><td>ccy</td><td>base_ccy</td><td>buy</td><td>sale</td></tr>";
+            for (index in exchangeRates) {
+                content += "<tr>" +
+                    "<td>" + exchangeRates[index].ccy + "</td>" +
+                    "<td>" + exchangeRates[index].base_ccy + "</td>" +
+                    "<td>" + exchangeRates[index].buy + "</td>" +
+                    "<td>" + exchangeRates[index].sale + "</td>" +
+                    "</tr>";
+            }
+            content += "</table>";
+        } else {
+            content = "No data";
+        }
+
+        document.getElementById("exchangeRatesData").innerHTML = content;
+    });
+
+    function httpGetAsync(theUrl, callback) {
+        const xmlHttp = new XMLHttpRequest();
+        xmlHttp.onreadystatechange = function() {
+            if (xmlHttp.readyState === 4 && xmlHttp.status === 200) {
+                callback(xmlHttp.responseText);
+            } else {
+                callback(null);
+            }
+        };
+        xmlHttp.open("GET", theUrl, true); // true for asynchronous
+        xmlHttp.send(null);
+    }
+</script>
+</body>
+</html>
