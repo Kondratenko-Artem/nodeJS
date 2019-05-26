@@ -10,9 +10,9 @@
 
 <script>
 
-    const exchangeRateUrl = 'https://api.privatbank.ua/p24api/pubinfo?json&exchange&coursid=3&fbclid=IwAR0ANFM-wz2VU8SywLiRAIkrVNAlJqV9IXnPXG6CTSBIUmNOFwDZ73bvXDU';
+    const exchangeRatesUrl = 'https://api.privatbank.ua/p24api/pubinfo?json&exchange&coursid=3&fbclid=IwAR0ANFM-wz2VU8SywLiRAIkrVNAlJqV9IXnPXG6CTSBIUmNOFwDZ73bvXDU';
 
-    httpGetAsync(exchangeRateUrl, function(_data) {
+    httpGetAsync(exchangeRatesUrl, function(_data) {
         let content;
 
         if (_data) {
@@ -44,7 +44,7 @@
                 callback(null);
             }
         };
-        xmlHttp.open("GET", theUrl, true); // true for asynchronous
+        xmlHttp.open("GET", theUrl, true);
         xmlHttp.send(null);
     }
 </script>
